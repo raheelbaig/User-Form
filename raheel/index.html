@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <title>FORM</title>
+</head>
+<style>
+  body {
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+  }
+</style>
+
+<body>
+  <h1>Server Form</h1>
+  ID : <input type="text" id="id" placeholder="Enter user ID"><br><br>
+  NAME : <input type="text" id="name" placeholder="Enter Name"><br><br>
+  EMAIL : <input type="email" id="email" placeholder="Enter Email"><br><br>
+  PASSWORD : <input type="password" id="pass" placeholder="password">
+  <button onclick="data()">post data</button><br>
+  <button onclick="get()">get data</button><br>
+  <button onclick="dlt()">delete data</button>
+  <ul id="result"></ul>
+
+
+</body>
+<script>
+
+
+
+  function data() {
+    let Name = document.getElementById("name").value
+    let email = document.getElementById("email").value
+    let pass = document.getElementById("pass").value
+    axios.post('https://usercreatedserver.herokuapp.com/users', {
+      name: Name,
+      email: email,
+      pass: pass
+    })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+  }
+
+  let newarray=[]
+
+  function get() {
+    axios.get('https://usercreatedserver.herokuapp.com/users/')
+      .then(function (response) {
+        console.log(response.data[0].name)
+        document.getElementById('result').innerHTML=response.data.map(e=>`
+        <p>Name : ${e.name}
+        Email : ${e.email}
+        Password : ${e.pass}<p>`).join(' ')
+        // for (i = 0; i < response.data.length; i++) {
+        //   let name = `name : ${response.data[i].name}`
+        //   let email = ` email : ${response.data[i].email}`
+        //   let pass = ` pass : ${response.data[i].pass}`
+        //   console.log(response);
+        //   let li = document.createElement("li")
+        //   let text = document.createTextNode(name)
+        //   let text1 = document.createTextNode(email)
+        //   let text2 = document.createTextNode(pass)
+        //   let ul = document.getElementById("result")
+        //   li.appendChild(text)
+        //   li.appendChild(text1)
+        //   li.appendChild(text2)
+        //   ul.appendChild(li)
+        //   console.log(name)
+
+        // }
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+  }
+
+const dlt=()=>{
+  let id= document.getElementById("id").value;
+  axios.delete(`https://usercreatedserver.herokuapp.com/users/${id}`)
+  .then(function (res) {
+        
+        console.log(res);
+      })
+  .catch(function (error) {
+        
+       console.log(error);
+    })
+
+}
+
+
+
+
+
+
+
+
+</script>
+
+</html>
