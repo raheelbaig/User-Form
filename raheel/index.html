@@ -10,22 +10,39 @@
 </head>
 <style>
   body {
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
     box-sizing: border-box;
     align-items: center;
     justify-content: center;
     height: 100vh;
     width: 100vw;
   }
+  #pass {
+    margin-bottom: 10px;
+  }
+  button {
+    border-radius: 10px;
+  }
+  input {
+    border-radius: 8px;
+  }
+  h1 {
+    font-weight: bolt;
+
+  }
+
 </style>
 
 <body>
-  <h1>Server Form</h1>
+  </ul><h1>Server Form</h1>
   ID : <input type="text" id="id" placeholder="Enter user ID"><br><br>
   NAME : <input type="text" id="name" placeholder="Enter Name"><br><br>
   EMAIL : <input type="email" id="email" placeholder="Enter Email"><br><br>
   PASSWORD : <input type="password" id="pass" placeholder="password">
-  <button onclick="data()">post data</button><br>
-  <button onclick="get()">get data</button><br>
+  <br>
+  <button onclick="data()">post data</button>
+  <button onclick="get()">get data</button>
   <button onclick="dlt()">delete data</button>
   <ul id="result"></ul>
 
@@ -45,7 +62,7 @@
       pass: pass
     })
       .then(function (response) {
-        console.log(response);
+        alert("user created")
       })
       .catch(function (error) {
         console.log(error);
@@ -60,9 +77,9 @@
       .then(function (response) {
         console.log(response.data[0].name)
         document.getElementById('result').innerHTML=response.data.map(e=>`
-        <p>Name : ${e.name}
-        Email : ${e.email}
-        Password : ${e.pass}<p>`).join(' ')
+        <p><hr>Name : ${e.name}<br>
+        Email : ${e.email}<br>
+        Password : ${e.pass}<p><hr>`).join(' ')
         // for (i = 0; i < response.data.length; i++) {
         //   let name = `name : ${response.data[i].name}`
         //   let email = ` email : ${response.data[i].email}`
@@ -92,7 +109,7 @@ const dlt=()=>{
   axios.delete(`https://usercreatedserver.herokuapp.com/users/${id}`)
   .then(function (res) {
         
-        console.log(res);
+       alert("delete User")
       })
   .catch(function (error) {
         
